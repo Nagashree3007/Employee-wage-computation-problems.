@@ -4,7 +4,7 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title : calculates monthly wages.
+@Title : calculates monthly wages based on condition
 
 '''
 
@@ -114,7 +114,29 @@ def monthly_wage():
             hours+=8
     return f"the monthly wage for employee in  20 days worked for {hours} hours is {hours*20}"
                 
+# UC6: Method to calculate wages based on total hours worked
+def calculate_hourly_wages():
+    """
+        Description: Calculates wages based on random hours worked.
+        
+        Parameters:None
+        
+        Returns:
+            str: Earnings based on hours worked.
+    """
     
+    days=hours=0
+    while days<=20  and hours<92:
+        part_time=random.randint(0, 1)
+        is_present=random.randint(0, 1)
+        if is_present:
+            if part_time:
+                days+=1
+                hours+=4
+            else :
+                days+=1
+                hours+=8
+    return f"the monthly wage for employee in 20 days worked for {hours} hours is {hours*20}"
     
 # UC4: Function to handle user input and execute corresponding functionality 
 def display_menu():
@@ -132,6 +154,7 @@ def display_menu():
     2. Calculate Daily Employee Wage
     3. Add Part-time Employee & Wage
     4.calculate the monthly wage
+    5.calculate the monthly wage based on condition
     """)
 
     try:
@@ -168,6 +191,9 @@ def process_choice(option):
             
         case 4:
             print(monthly_wage())
+            
+        case 5:
+            print(calculate_hourly_wages())
             
         case _:
             print("Invalid input. Please choose a valid option.")
