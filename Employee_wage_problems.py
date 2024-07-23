@@ -4,13 +4,14 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title :Function to handle user input and execute corresponding functionality
-
+@Title : calculates monthly wages.
 
 '''
 
 
 import random
+
+
 
 # UC1: Method to determine if employee is present or absent
 
@@ -33,7 +34,7 @@ def check_presence():
     else:
         return "Employee is present.",is_present
 
-is_present=check_presence()
+result,is_present=check_presence()
 # UC2: Method to calculate daily wages based on attendance
 
 def calculate_daily_wage(is_present):
@@ -51,6 +52,7 @@ def calculate_daily_wage(is_present):
     
     if is_present == 0:
         daily_hours = 0
+        wage=0
     else:
         daily_hours = 8  # Assuming 8 hours of work per day
         wage = daily_hours * 20  # Assuming wage rate per hour is 20
@@ -86,15 +88,42 @@ def add_part_time_employee(name):
         wages=0
         return f"{name} earned {wages} rupees he is absent today"
     
+#UC5: Function to calculate monthly wages
+
+def monthly_wage():
+    
+    """
+    
+    
+     Description: Give the monthly wage for a company
+    
+     Parameters:None
+    
+     Return: wages of a person based on part time or full time working hours
+    
+    
+    """
+    days=hours=0
+    for _ in range(20):
+        part_time=random.randint(0, 1)
+        if part_time:
+            days+=1
+            hours+=4
+        else :
+            days+=1
+            hours+=8
+    return f"the monthly wage for employee in  20 days worked for {hours} hours is {hours*20}"
+                
+    
     
 # UC4: Function to handle user input and execute corresponding functionality 
 def display_menu():
     """
-    Description: Give the menu to user and collect the option as an input to perform specific task
+     Description: Give the menu to user and collect the option as an input to perform specific task
     
-    Parameters:None
+     Parameters:None
     
-    Return: None
+     Return: None
     
     """
     print("""
@@ -102,6 +131,7 @@ def display_menu():
     1. Check Employee Presence
     2. Calculate Daily Employee Wage
     3. Add Part-time Employee & Wage
+    4.calculate the monthly wage
     """)
 
     try:
@@ -110,6 +140,7 @@ def display_menu():
     except ValueError:
         print("Invalid input. Please enter a number.")
         return None
+
 
 # Function to handle user input and execute corresponding functionality
 def process_choice(option):
@@ -134,6 +165,9 @@ def process_choice(option):
             name = input("Enter the name of the employee: ")
             result = add_part_time_employee(name)
             print(result)
+            
+        case 4:
+            print(monthly_wage())
             
         case _:
             print("Invalid input. Please choose a valid option.")
