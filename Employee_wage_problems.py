@@ -132,7 +132,7 @@ class Company:
     def __init__(self, name, wage_per_hr, working_days_per_month, max_working_hours):
         self.name = name
         self.wage_per_hr = wage_per_hr
-        self.working_days_per_month = working_days_per_month
+        self.working_days_per_month = working_days_per_month 
         self.max_working_hours = max_working_hours
     
     def display_menu(self):
