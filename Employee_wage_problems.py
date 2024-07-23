@@ -4,7 +4,7 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title :Compute Employee Wage for multiple companies
+@Title :Computes and saves the total wage for each company.
 
 '''
 
@@ -123,9 +123,10 @@ class Employee:
                     total_hours += 4
                 else:
                     total_hours += 8
-        
         wage = total_hours * 20  # Assuming wage rate per hour is 20
-        return f"The monthly wage for {name} in {total_hours} hours worked is {wage} rupees."
+        d={}
+        d[name]=wage
+        return f"The monthly wage for {name} in {total_hours} hours worked is {wage} rupees.",d
 
 class Company:
     def __init__(self, name, wage_per_hr, working_days_per_month, max_working_hours):
@@ -185,8 +186,11 @@ class Company:
             case 4:
                 print(employee.monthly_wage(employee_name, self.working_days_per_month))
             case 5:
-                   result=(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
+                   result,dic=(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
                    print(result)
+            case 6:
+                result,dic=(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
+                print(dic)
             case _:
                 print("Invalid input. Please choose a valid option.")
     
