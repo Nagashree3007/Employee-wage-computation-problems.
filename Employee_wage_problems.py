@@ -11,8 +11,6 @@
 
 import random
 
-global is_present
-
 # UC1: Method to determine if employee is present or absent
 
 def check_presence():
