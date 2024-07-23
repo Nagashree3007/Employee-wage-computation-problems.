@@ -4,11 +4,44 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title :Computes and saves the total wage for each company.
+@Title :Ability to manage Employee Wage of multiple companies using Interface approach.
 
 '''
-
+from abc import ABC, abstractmethod
 import random
+
+class EmpWageBuilder(ABC):
+    @abstractmethod 
+    def display_menu(self):
+        """
+        Description: Displays menu options to the user.
+        
+        Returns:
+            int: User's choice.
+        """
+        pass
+    
+    @abstractmethod
+    def process_choice(self, option, employee_name):
+        """
+        Description: Processes user's choice and executes corresponding functionality using match statement.
+        
+        Parameters:
+            option (int): User-selected option from the menu.
+            employee_name (str): Name of the employee.
+        
+        Returns: None
+        """
+        pass
+    
+    @abstractmethod
+    def main(self):
+        """
+        Description: Main function to run the program for this company.
+        
+        Returns: None
+        """
+        pass
 
 class Employee:
     def __init__(self, name):
@@ -90,7 +123,8 @@ class Employee:
         total_days = 0
         total_hours = 0
         for _ in range(working_days):
-            is_present = random.randint(0, 1)
+            is_present = random.randint(0, 1) 
+            
             if is_present:
                 part_time = random.randint(0, 1)
                 if part_time:
@@ -123,16 +157,15 @@ class Employee:
                     total_hours += 4
                 else:
                     total_hours += 8
+        
         wage = total_hours * 20  # Assuming wage rate per hour is 20
-        d={}
-        d[name]=wage
-        return f"The monthly wage for {name} in {total_hours} hours worked is {wage} rupees.",d
+        return f"The monthly wage for {name} in {total_hours} hours worked is {wage} rupees."
 
-class Company:
+class Company(EmpWageBuilder):
     def __init__(self, name, wage_per_hr, working_days_per_month, max_working_hours):
         self.name = name
         self.wage_per_hr = wage_per_hr
-        self.working_days_per_month = working_days_per_month 
+        self.working_days_per_month = working_days_per_month
         self.max_working_hours = max_working_hours
     
     def display_menu(self):
@@ -149,7 +182,7 @@ class Company:
         3. Add Part-time Employee & Wage
         4. Calculate Monthly Wage
         5. Calculate Hourly Wages
-        6.Display company wages details
+        6. Display company wages details
         """)
 
         try:
@@ -175,7 +208,7 @@ class Company:
             case 1:
                 result, is_present = employee.check_presence()
                 print(result)
-                if is_present==0:
+                if is_present == 0:
                     return 0
             case 2:
                 result, is_present = employee.check_presence()
@@ -186,11 +219,9 @@ class Company:
             case 4:
                 print(employee.monthly_wage(employee_name, self.working_days_per_month))
             case 5:
-                   result,dic=(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
-                   print(result)
+                print(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
             case 6:
-                result,dic=(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
-                print(dic)
+                print(employee.calculate_hourly_wages(employee_name, self.max_working_hours))
             case _:
                 print("Invalid input. Please choose a valid option.")
     
@@ -204,8 +235,8 @@ class Company:
         exit_code = 1
         while exit_code:
             result = self.display_menu()
-            if self.process_choice(result, employee_name)==0:
-                exit_code=0
+            if self.process_choice(result, employee_name) == 0:
+                exit_code = 0
             else:
                 exit_code = int(input("Do you want to continue (1-yes / 0-No): "))
         
