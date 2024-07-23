@@ -133,7 +133,7 @@ class Company:
         self.name = name
         self.wage_per_hr = wage_per_hr
         self.working_days_per_month = working_days_per_month
-        self.max_working_hours = max_working_hours
+        self.max_working_hours = max_working_hours 
     
     def display_menu(self):
         """
