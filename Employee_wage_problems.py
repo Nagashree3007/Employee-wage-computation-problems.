@@ -4,14 +4,13 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title : Adds a part-time employee and calculates wages.
+@Title :Function to handle user input and execute corresponding functionality
+
 
 '''
 
 
 import random
-
-global is_present
 
 # UC1: Method to determine if employee is present or absent
 
@@ -88,10 +87,67 @@ def add_part_time_employee(name):
         return f"{name} earned {wages} rupees he is absent today"
     
     
+# UC4: Function to handle user input and execute corresponding functionality 
+def display_menu():
+    """
+    Description: Give the menu to user and collect the option as an input to perform specific task
+    
+    Parameters:None
+    
+    Return: None
+    
+    """
+    print("""
+    Menu:
+    1. Check Employee Presence
+    2. Calculate Daily Employee Wage
+    3. Add Part-time Employee & Wage
+    """)
+
+    try:
+        option = int(input("Enter your choice: "))
+        return option
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+        return None
+
+# Function to handle user input and execute corresponding functionality
+def process_choice(option):
+    """
+    Description: Processes user choice and calls appropriate methods using match statement.
+    
+    Parameters:
+        option (int): User-selected option from the menu.
+    
+    Return: None
+    
+    """
+    
+    match option:
+        case 1:
+            result,is_present =check_presence()
+            print(result)
+        case 2:
+            result,is_present =check_presence()
+            print(calculate_daily_wage(is_present))
+        case 3:
+            name = input("Enter the name of the employee: ")
+            result = add_part_time_employee(name)
+            print(result)
+            
+        case _:
+            print("Invalid input. Please choose a valid option.")
+
+
 def main():
-    name = input('Enter the Name of Employee: ')
-    result = add_part_time_employee(name)
-    print(result)
+    exit_code=1
+    while exit_code:
+        result=display_menu()
+        process_choice(result)
+        exit_code=int(input("Do YOu Want To Comtinue....??(1-yes)or (0-No)"))
+    print("Thank you for using the Employee Wage Computation Program.")
+        
+    
 
 if __name__ == '__main__':
     main()
