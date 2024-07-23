@@ -4,210 +4,172 @@
 @Date: 2024-07-22
 @Last Modified by: Nagashree C R
 @Last Modified: 2024-07-22  
-@Title : calculates monthly wages based on condition
+@Title :Refactoring the Code to write a Class Method to Compute Employee Wage - Using Class Method and Class.
 
 '''
 
 
 import random
 
-
-
-# UC1: Method to determine if employee is present or absent
-
-def check_presence():
-    """
-        
-    Description: Simulates employee presence or absence randomly.
+class Employee:
+    def __init__(self, name):
+        self.name = name
+        self.is_present = False
     
-    Parameters:None
-    
-    Returns:
-        is_present: 0 for absent, 1 for present.
-            
-    """
-        
-        
-    is_present = random.randint(0, 1)
-    if is_present == 0:
-        return "Employee is absent.",is_present
-    else:
-        return "Employee is present.",is_present
-
-result,is_present=check_presence()
-# UC2: Method to calculate daily wages based on attendance
-
-def calculate_daily_wage(is_present):
-    """
-        
-        Description: Calculates daily wage based on employee's attendance.
-        
-        parameters:
-            is_present (int): 0 for absent, 1 for present.
+    def check_presence(self):
+        """
+        Description: Simulates employee presence or absence randomly.
         
         Returns:
-            wage: Daily wage of the employee Assuming 8 hours of work per day.
-            
-    """
+            str: Presence status message.
+        """
+        self.is_present = random.randint(0, 1)
+        if self.is_present == 0:
+            return "Employee is absent."
+        else:
+            return "Employee is present."
     
-    if is_present == 0:
-        daily_hours = 0
-        wage=0
-    else:
-        daily_hours = 8  # Assuming 8 hours of work per day
-        wage = daily_hours * 20  # Assuming wage rate per hour is 20
+    def calculate_daily_wage(self):
+        """
+        Description: Calculates daily wage based on employee's attendance.
         
-    return f"Daily wage: {wage} rupees."
-
-
-# UC3: Method to add part-time employee and calculate wages
-
-def add_part_time_employee(name):
-    """
+        Returns:
+            str: Daily wage message.
+        """
+        if self.is_present == 0:
+            daily_hours = 0
+        else:
+            daily_hours = 8  # Assuming 8 hours of work per day
+        
+        wage = daily_hours * 20  # Assuming wage rate per hour is 20
+        return f"Daily wage: {wage} rupees."
     
-       Description:Adds a part-time employee and calculates wages.
-       
-       parameters:
-            name (str): Name of the part-time employee.
+    def add_part_time_employee(self):
+        """
+        Description: Adds a part-time employee and calculates wages.
         
         Returns:
             str: Confirmation message with total earnings.
-            
-    """
-    
-    part_time=random.randint(0, 1)
-    if part_time and is_present:
-        hours = 4  # Assuming 4  hours of work for part-time employee
-        wages=(hours*20)
-        return f"{name} earned {wages} rupees & he/she is Part-time employee."
-    elif is_present:
-        hours = 8  # Assuming 8 hours of work for Full-time employee
-        wages=(hours*20)
-        return f"{name} earned {wages} rupees he/she is full-time employee."
-    else:
-        wages=0
-        return f"{name} earned {wages} rupees he is absent today"
-    
-#UC5: Function to calculate monthly wages
-
-def monthly_wage():
-    
-    """
-    
-    
-     Description: Give the monthly wage for a company
-    
-     Parameters:None
-    
-     Return: wages of a person based on part time or full time working hours
-    
-    
-    """
-    days=hours=0
-    for _ in range(20):
-        part_time=random.randint(0, 1)
-        if part_time:
-            days+=1
-            hours+=4
-        else :
-            days+=1
-            hours+=8
-    return f"the monthly wage for employee in  20 days worked for {hours} hours is {hours*20}"
-                
-# UC6: Method to calculate wages based on total hours worked
-def calculate_hourly_wages():
-    """
-        Description: Calculates wages based on random hours worked.
+        """
+        part_time = random.randint(0, 1)
         
-        Parameters:None
+        if part_time and self.is_present:
+            hours = 4  # Assuming 4 hours of work for part-time employee
+            return f"{self.name} earned {hours * 20} rupees & he/she is Part-time employee."
+        elif self.is_present:
+            hours = 8  # Assuming 8 hours of work for Full-time employee
+            return f"{self.name} earned {hours * 20} rupees he/she is full-time employee."
+        else:
+            return f"{self.name} earned 0 rupees he/she is absent today."
+    
+    def monthly_wage(self):
+        """
+        Description: Calculates monthly wages based on random daily hours worked.
+        
+        Returns:
+            str: Monthly wage message.
+        """
+        days = hours = 0
+        for i in range(20):
+            part_time = random.randint(0, 1)
+            if part_time:
+                days += 1
+                hours += 4
+            else:
+                days += 1
+                hours += 8
+        
+        return f"The monthly wage for 20 days worked for {hours} hours is {hours * 20}"
+    
+    def calculate_hourly_wages(self):
+        """
+        Description: Calculates wages based on total hours worked.
         
         Returns:
             str: Earnings based on hours worked.
-    """
-    
-    days=hours=0
-    while days<=20  and hours<92:
-        part_time=random.randint(0, 1)
-        is_present=random.randint(0, 1)
-        if is_present:
-            if part_time:
-                days+=1
-                hours+=4
-            else :
-                days+=1
-                hours+=8
-    return f"the monthly wage for employee in 20 days worked for {hours} hours is {hours*20}"
-    
-# UC4: Function to handle user input and execute corresponding functionality 
-def display_menu():
-    """
-     Description: Give the menu to user and collect the option as an input to perform specific task
-    
-     Parameters:None
-    
-     Return: None
-    
-    """
-    print("""
-    Menu:
-    1. Check Employee Presence
-    2. Calculate Daily Employee Wage
-    3. Add Part-time Employee & Wage
-    4.calculate the monthly wage
-    5.calculate the monthly wage based on condition
-    """)
-
-    try:
-        option = int(input("Enter your choice: "))
-        return option
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return None
-
-
-# Function to handle user input and execute corresponding functionality
-def process_choice(option):
-    """
-    Description: Processes user choice and calls appropriate methods using match statement.
-    
-    Parameters:
-        option (int): User-selected option from the menu.
-    
-    Return: None
-    
-    """
-    
-    match option:
-        case 1:
-            result,is_present =check_presence()
-            print(result)
-        case 2:
-            result,is_present =check_presence()
-            print(calculate_daily_wage(is_present))
-        case 3:
-            name = input("Enter the name of the employee: ")
-            result = add_part_time_employee(name)
-            print(result)
+        """
+        days = hours = 0
+        while days <20 and hours <= 92:
+            part_time = random.randint(0, 1)
+            is_present = random.randint(0, 1)
             
-        case 4:
-            print(monthly_wage())
-            
-        case 5:
-            print(calculate_hourly_wages())
-            
-        case _:
-            print("Invalid input. Please choose a valid option.")
-
-
-def main():
-    exit_code=1
-    while exit_code:
-        result=display_menu()
-        process_choice(result)
-        exit_code=int(input("Do YOu Want To Comtinue....??(1-yes)or (0-No)"))
-    print("Thank you for using the Employee Wage Computation Program.")
+            if is_present:
+                if part_time:
+                    days += 1
+                    hours += 4
+                else:
+                    days += 1
+                    hours += 8
         
+        return f"The monthly wage for {self.name} in {days} out of 20 days worked for {hours} hours is {hours * 20}"
+
+    def display_menu(self):
+        """
+        Description: Displays menu options to the user.
+        
+        Returns:
+            int: User's choice.
+        """
+        print("""
+        Menu:
+        1. Check Employee Presence
+        2. Calculate Daily Employee Wage
+        3. Add Part-time Employee & Wage
+        4. Calculate Monthly Wage
+        5. Calculate Hourly Wages
+        """)
+
+        try:
+            option = int(input("Enter your choice: "))
+            return option
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+            return None
     
+    def process_choice(self, option):
+        """
+        Description: Processes user's choice and executes corresponding functionality using match statement.
+        
+        Parameters:
+            option (int): User-selected option from the menu.
+        
+        Returns: None
+        """
+        match option:
+            case 1:
+                result = self.check_presence()
+                print(result)
+                if "absent" in result:  # Check if the employee is present
+                    return 0  # Exit code 0 to stop the loop
+            case 2:
+                print(self.calculate_daily_wage())
+            case 3:
+                print(self.add_part_time_employee())
+            case 4:
+                print(self.monthly_wage())
+            case 5:
+                print(self.calculate_hourly_wages())
+            case _:
+                print("Invalid input. Please choose a valid option.")
+    
+    def main(self):
+        """
+        Description: Main function to run the program.
+        
+        Returns: None
+        """
+        exit_code = 1
+        while exit_code:
+            result = self.display_menu()
+            if self.process_choice(result)== 0:
+                exit_code = 0
+            else:
+                exit_code = int(input("Do you want to continue (1-yes / 0-No): "))
+        
+        print("Thank you for using the Employee Wage Computation Program.")
+
 
 if __name__ == '__main__':
-    main()
+    name = input("Enter the name of the employee: ")
+    emp = Employee(name)
+    emp.main()
